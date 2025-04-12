@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@types/fabric": "^5.3.10",
     "axios": "^1.8.4",
     "clear": "^0.1.0",
     "fabric": "^6.6.2",

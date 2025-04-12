@@ -128,9 +128,8 @@ export default function SearchPage() {
               className="text-center py-16"
             >
               <p className="text-2xl font-comic text-purple-700 font-bold">Ready for an adventure?</p>
-              <p className="text-lg font-comic text-gray-600 mt-2">
-                Search for something fun like "unicorns" or "rainbows"!
-              </p>
+              <p className="text-lg font-comic text-gray-600 mt-2">Search for something fun like &quot;unicorns&quot; or &quot;rainbows&quot;!</p>
+
             </motion.div>
           ) : images.length === 0 && query !== '' ? (
             <motion.div
