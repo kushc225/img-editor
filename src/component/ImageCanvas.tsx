@@ -22,7 +22,7 @@ const ImageCanvas: React.FC<ImageCanvasProps> = ({ imgUrl }) => {
 
   useEffect(() => {
     if (!canvasRef.current) return;
-
+    console.log('Initializing Fabric.js canvas');
     const fabricCanvas = new Canvas(canvasRef.current, {
       width: 1020,
       height: 500,
@@ -33,7 +33,7 @@ const ImageCanvas: React.FC<ImageCanvasProps> = ({ imgUrl }) => {
 
     fabricCanvasRef.current = fabricCanvas;
 
-    // Load image
+    console.log('Loading image from URL:', imgUrl);
     FabricImage.fromURL(imgUrl, { crossOrigin: 'anonymous' }).then((img) => {
       img.set({
         left: 100,
@@ -46,11 +46,14 @@ const ImageCanvas: React.FC<ImageCanvasProps> = ({ imgUrl }) => {
     });
 
     return () => {
+      console.log('Disposing Fabric.js canvas');
       fabricCanvas.dispose();
     };
   }, [imgUrl]);
 
   const addText = () => {
+    console.log('Adding text to canvas');
+
     const canvas = fabricCanvasRef.current;
     if (!canvas) return;
 
@@ -63,12 +66,15 @@ const ImageCanvas: React.FC<ImageCanvasProps> = ({ imgUrl }) => {
 
     canvas.add(text);
     canvas.setActiveObject(text);
+    console.log('Text added and set as active object');
+
     canvas.requestRenderAll();
   };
 
   const addRectangle = () => {
     const canvas = fabricCanvasRef.current;
     if (!canvas) return;
+    console.log('Adding rectangle to canvas');
 
     const rect = new Rect({
       left: 150,
@@ -79,12 +85,15 @@ const ImageCanvas: React.FC<ImageCanvasProps> = ({ imgUrl }) => {
     });
 
     canvas.add(rect);
+    console.log('Rectangle added to canvas');
+
     canvas.requestRenderAll();
   };
 
   const addCircle = () => {
     const canvas = fabricCanvasRef.current;
     if (!canvas) return;
+    console.log('Adding circle to canvas');
 
     const circle = new Circle({
       left: 200,
@@ -94,12 +103,15 @@ const ImageCanvas: React.FC<ImageCanvasProps> = ({ imgUrl }) => {
     });
 
     canvas.add(circle);
+    console.log('Circle added to canvas');
+
     canvas.requestRenderAll();
   };
 
   const addTriangle = () => {
     const canvas = fabricCanvasRef.current;
     if (!canvas) return;
+    console.log('Adding triangle to canvas');
 
     const triangle = new Triangle({
       left: 250,
@@ -110,12 +122,16 @@ const ImageCanvas: React.FC<ImageCanvasProps> = ({ imgUrl }) => {
     });
 
     canvas.add(triangle);
+    console.log('Triangle added to canvas');
+
     canvas.requestRenderAll();
   };
 
   const addPolygon = () => {
     const canvas = fabricCanvasRef.current;
     if (!canvas) return;
+    console.log('Adding polygon to canvas');
+
 
     const polygon = new Polygon(
       [
@@ -132,12 +148,15 @@ const ImageCanvas: React.FC<ImageCanvasProps> = ({ imgUrl }) => {
     );
 
     canvas.add(polygon);
+    console.log('Polygon added to canvas');
+
     canvas.requestRenderAll();
   };
 
   const exportAsSVG = () => {
     const canvas = fabricCanvasRef.current;
     if (!canvas) return;
+    console.log('Exporting canvas as SVG');
 
     let svg = canvas.toSVG();
     svg = svg.replace(/&(?!(amp;|lt;|gt;|quot;|apos;))/g, '&');
@@ -149,11 +168,15 @@ const ImageCanvas: React.FC<ImageCanvasProps> = ({ imgUrl }) => {
     link.download = 'canvas-export.svg';
     link.click();
     URL.revokeObjectURL(url);
+    console.log('SVG exported and downloaded');
+
+
   };
 
   const exportAsJSON = () => {
     const canvas = fabricCanvasRef.current;
     if (!canvas) return;
+    console.log('Exporting canvas as JSON');
 
     const json = canvas.toJSON();
     const jsonStr = JSON.stringify(json, null, 2);
@@ -164,16 +187,17 @@ const ImageCanvas: React.FC<ImageCanvasProps> = ({ imgUrl }) => {
     link.download = 'canvas-export.json';
     link.click();
     URL.revokeObjectURL(url);
+    console.log('JSON exported and downloaded');
+
+
   };
 
-  // Animation variants for buttons
   const buttonVariants = {
     rest: { scale: 1, y: 0 },
     hover: { scale: 1.15, y: -4, transition: { type: 'spring', stiffness: 400, damping: 10 } },
     tap: { scale: 0.95 },
   };
 
-  // Animation variants for the canvas container
   const canvasVariants = {
     hidden: { opacity: 0, scale: 0.9 },
     visible: {
